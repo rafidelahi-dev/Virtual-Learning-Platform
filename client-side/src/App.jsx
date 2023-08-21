@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
+  const [navbarBlurred, setNavbarBlurred] = useState(false) // State to track blur effect
 
   useEffect(() => {
     const circleElement = document.querySelector('.circle')
@@ -16,6 +17,20 @@ function App() {
       vlpElement.style.animation = 'vlpFadeIn 1s forwards'
       vlpElaborateElement.style.animation = 'vlpFadeIn 1s forwards'
     }, 500) // after 1 second
+    // Scroll event listener to handle navbar blur
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setNavbarBlurred(true)
+      } else {
+        setNavbarBlurred(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   const openLoginForm = () => {
@@ -40,21 +55,21 @@ function App() {
         userData
       )
       // Handle successful registration, e.g., show a success message
-      console.log('Registration successful:', response.data);
+      console.log('Registration successful:', response.data)
     } catch (error) {
       // Handle registration error, e.g., show an error message
-      console.error('Registration error:', error);
+      console.error('Registration error:', error)
     }
   }
 
   const handleSubmitSignUpForm = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // Collect form data
-    const firstName = event.target.firstName.value;
-    const lastName = event.target.lastName.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const firstName = event.target.firstName.value
+    const lastName = event.target.lastName.value
+    const email = event.target.email.value
+    const password = event.target.password.value
 
     // Prepare user data to send to the server
     const userData = {
@@ -62,17 +77,31 @@ function App() {
       lastName,
       email,
       password,
-    };
+    }
 
     // Call the registerUser function to send the data to the backend
-    await registerUser(userData);
+    await registerUser(userData)
 
     // Close the registration form
-    setShowSignUp(false);
+    setShowSignUp(false)
   }
 
   return (
-    <div className='app-container'>
+    <div className={`app-container ${navbarBlurred ? 'blurred' : ''}`}>
+      <nav className={`navbar ${navbarBlurred ? 'blurred' : ''}`}>
+        <div className='logo'>
+          <img src='' alt='VLP Logo' />
+          <p>Virtual Learning Platform</p>
+        </div>
+        <div className='navbar-links'>
+          <a href='#'>Home</a>
+          <a href='#'>Content</a>
+          <a href='#'>Contact</a>
+          <div className='mobile-menu'>
+            <i className='fas fa-bars'></i>
+          </div>
+        </div>
+      </nav>
       <div className='main-content'>
         <div className='vlp-container'>
           <div className='circle'></div>
@@ -231,7 +260,6 @@ function App() {
       )}
     </div>
   )
-
 }
 
 export default App
