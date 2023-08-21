@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import './App.css'
 
 function App() {
@@ -30,6 +31,44 @@ function App() {
   const closeForm = () => {
     setShowLogin(false)
     setShowSignUp(false)
+  }
+
+  const registerUser = async (userData) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/api/signup',
+        userData
+      )
+      // Handle successful registration, e.g., show a success message
+      console.log('Registration successful:', response.data);
+    } catch (error) {
+      // Handle registration error, e.g., show an error message
+      console.error('Registration error:', error);
+    }
+  }
+
+  const handleSubmitSignUpForm = async (event) => {
+    event.preventDefault();
+
+    // Collect form data
+    const firstName = event.target.firstName.value;
+    const lastName = event.target.lastName.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    // Prepare user data to send to the server
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+
+    // Call the registerUser function to send the data to the backend
+    await registerUser(userData);
+
+    // Close the registration form
+    setShowSignUp(false);
   }
 
   return (
@@ -173,19 +212,19 @@ function App() {
 
       {showSignUp && (
         <div className='form-popup'>
-          <form className='signup-form'>
+          <form className='signup-form' onSubmit={handleSubmitSignUpForm}>
             <h2>Sign Up</h2>
-            <input type='text' placeholder='First Name' />
-            <input type='text' placeholder='Last Name' />
-            <input type='email' placeholder='Email' />
-            <input type='password' placeholder='Password' />
+            <input type='text' placeholder='First Name' name='firstName' />
+            <input type='text' placeholder='Last Name' name='lastName' />
+            <input type='email' placeholder='Email' name='email' />
+            <input type='password' placeholder='Password' name='password' />
             <button type='submit'>Sign Up</button>
             <p>
               Already have an account?{' '}
               <span onClick={openLoginForm}>Log in</span>
             </p>
             <button className='close-btn' onClick={closeForm}>
-              <i className='fas fa-times'></i> {/* Font Awesome close icon */}{' '}
+              <i className='fas fa-times'></i>
             </button>
           </form>
         </div>

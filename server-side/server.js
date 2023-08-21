@@ -1,10 +1,16 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3001;
+const express = require('express')
+const cors = require('cors') // Import the cors package
+const app = express()
+const PORT = process.env.PORT || 3001
 const { controller } = require('./controller')
 
-app.get('/', controller.home);
+// Import and use the express.json() middleware
+app.use(express.json())
+app.use(cors())
+
+app.get('/', controller.home)
+app.post('/api/signup', controller.signup)
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+  console.log(`Server is running on port ${PORT}`)
+})
