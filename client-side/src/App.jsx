@@ -1,11 +1,17 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+//import { Link, useHistory } from 'react-router-dom'
+
 import './App.css'
+
+
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [navbarBlurred, setNavbarBlurred] = useState(false) // State to track blur effect
+
+  //const history = useHistory() // Get the history object
 
   useEffect(() => {
     const circleElement = document.querySelector('.circle')
@@ -84,6 +90,9 @@ function App() {
 
     // Close the registration form
     setShowSignUp(false)
+
+    //Navigat to the content file
+    //history.push('./content.jsx')
   }
 
   return (

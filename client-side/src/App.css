@@ -229,11 +229,9 @@ opacity: 0;
 }
 
 .close-btn {
-  background-color: gray;
-  color: rgb(250, 249, 249);
   border: none;
   border-radius: 50%; /* Make the button circular */
-  padding: 5px; /* Adjust the padding as needed */
+  padding: 7px; /* Adjust the padding as needed */
   cursor: pointer;
   position: absolute; /* Position the close button */
   top: 10px; /* Adjust the vertical position */
@@ -242,6 +240,10 @@ opacity: 0;
 
 .close-btn i {
   font-size: 20px; /* Adjust the icon size */
+}
+.close-btn i:hover{
+  color: rgb(126, 126, 126);
+  font-size: 25px;
 }
 
 .info-btn {
